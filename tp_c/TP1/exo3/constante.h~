@@ -1,7 +1,0 @@
-#define MAXNOM 100
-
-struct Eleve
-{
-  char * nom ;
-  int promo ; 
-}; 

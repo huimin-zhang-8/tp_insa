@@ -1,5 +1,0 @@
-#include "constante.h"
-
-void Init_Eleve() ; 
-
-void Affiche_Eleve(struct Eleve Un_Eleve) ; 
