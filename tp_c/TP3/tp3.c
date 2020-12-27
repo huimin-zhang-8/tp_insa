@@ -3,11 +3,30 @@
 #include <string.h>
 #include <ctype.h>
 
+struct Cellule
+{
+  int Entier ;
+  struct Cellule * Suivant ;
+};
+
+struct Pile_Entiers
+{
+  struct Cellule * Premier ;
+  int Taille ;
+};
+
 typedef struct Programme
 {
   char **tokens;
   int taille;
 } Programme;
+
+struct Etat
+{
+  struct Pile_Entiers * Une_Pile ;
+  struct Programme * Un_Programme ; 
+};
+
 
 int numberOfDelimiters(char* string)
 {
@@ -25,28 +44,18 @@ Programme* lexer(char* chaine)
   str = strdup(chaine);
   int i=0;
   char** programme = (char**) malloc(sizeof(char*) * (numberOfDelimiters(str)+1));
-  while ( (token = strsep(&str, " ")) )
+  token = strtok(&(*str), " ") ;
+  while ( (token != NULL) )
     {
       programme[i] = token;
       i++;
+      token = strtok(NULL, " ") ;
     }
   Programme *retour = (Programme*)malloc(sizeof(Programme));
   retour->tokens = programme;
   retour->taille = i;
   return retour;
 }
-
-struct Cellule
-{
-  int Entier ;
-  struct Cellule * Suivant ;
-};
-
-struct Pile_Entiers
-{
-  struct Cellule * Premier ;
-  int Taille ;
-};
 
 struct Pile_Entiers Creer_Pile()
 {
@@ -102,6 +111,19 @@ void Depiler(struct Pile_Entiers * Une_Pile)
     }
 }
 
+void Executer(struct Etat * Un_Etat)
+{
+  for (int i = 0 ; i < Un_Etat->Un_Programme->taille ; i++)
+  {
+    switch (Un_Etat->Un_Programme->tokens[i])
+    {
+    case isdigit :
+      /* code */
+      break;
+    }
+  }
+}
+
 int main(int argc, char * argv[])
 {
   struct Pile_Entiers Ma_Pile ;
@@ -113,6 +135,7 @@ int main(int argc, char * argv[])
   Afficher(Ma_Pile) ;
   Depiler(&Ma_Pile) ;
   Afficher(Ma_Pile) ;
+  printf("\n") ; 
 
   Programme * Mon_Programme = lexer(argv[1]) ;
   for (int i = 0 ; i < Mon_Programme->taille ; i++)

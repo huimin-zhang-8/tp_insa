@@ -45,6 +45,8 @@ void Init(int * nb_lignes, int * nb_colonnes, int *** M)
     printf("Veuillez saisir le nombre de colonnes : ") ;
     scanf("%d", nb_colonnes) ;
 
+    printf("Veuillez saisir les elements : ") ; 
+
     *M = malloc(sizeof(int *)* *nb_lignes) ;
     for (L=0 ; L<*nb_lignes ; L++)
         M[L] = malloc(sizeof(int)* *nb_colonnes) ;

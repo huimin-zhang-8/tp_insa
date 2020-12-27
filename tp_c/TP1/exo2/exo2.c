@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "exo2.h"
 
 void Affiche(char ch[])
@@ -18,6 +19,6 @@ int Fact(int n)
 
 void Date()
 {
-  system("/bin/date") ; 
+  system("date /t") ; 
 }
 
