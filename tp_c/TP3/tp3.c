@@ -27,7 +27,6 @@ struct Etat
   struct Programme * Un_Programme ; 
 };
 
-
 int numberOfDelimiters(char* string)
 {
   int count = 0;
@@ -57,11 +56,11 @@ Programme* lexer(char* chaine)
   return retour;
 }
 
-struct Pile_Entiers Creer_Pile()
+struct Pile_Entiers * Creer_Pile()
 {
-  struct Pile_Entiers Pile_Vide ;
-  Pile_Vide.Premier = NULL ;
-  Pile_Vide.Taille = 0 ; 
+  struct Pile_Entiers * Pile_Vide = malloc(sizeof(struct Pile_Entiers));
+  Pile_Vide->Premier = NULL ;
+  Pile_Vide->Taille = 0 ; 
   return(Pile_Vide) ;
 }
 
@@ -94,39 +93,94 @@ void Empiler(int Entier, struct Pile_Entiers * Une_Pile)
   New_Cellule->Suivant = Une_Pile->Premier ; 
   
   Une_Pile->Premier = New_Cellule ;
-  Une_Pile->Taille = Une_Pile->Taille++; 
+  Une_Pile->Taille++; 
 }
 
-void Depiler(struct Pile_Entiers * Une_Pile)
+int Depiler(struct Pile_Entiers * Une_Pile)
 {
+  int valeur ; 
+  struct Cellule * Ancien;
   if (Est_Vide(*Une_Pile))
     printf("La file est vide !") ;
   else
     {
-      struct Cellule * Ancien ;
       Ancien = Une_Pile->Premier ;
       Une_Pile->Premier = Une_Pile->Premier->Suivant ;
-      Une_Pile->Taille = Une_Pile->Taille-- ;
+      Une_Pile->Taille-- ;
+      valeur = Ancien->Entier ; 
       free(Ancien) ;
     }
+  return(valeur) ; 
 }
 
 void Executer(struct Etat * Un_Etat)
 {
+  int val1, val2, resultat ; 
+
   for (int i = 0 ; i < Un_Etat->Un_Programme->taille ; i++)
   {
-    switch (Un_Etat->Un_Programme->tokens[i])
+    // Si le token est un opérateur arithmétique
+    if (ispunct(Un_Etat->Un_Programme->tokens[i][0]))
     {
-    case isdigit :
-      /* code */
-      break;
+      // S'il y a au moins 2 nombres dans la pile
+      if (Un_Etat->Une_Pile->Taille >= 2)
+      {
+        val1 = Depiler(Un_Etat->Une_Pile) ; 
+        val2 = Depiler(Un_Etat->Une_Pile) ; 
+        if (strcmp(Un_Etat->Un_Programme->tokens[i],"+") == 0)
+        {
+          resultat = val1 + val2 ; 
+        }
+        else if (strcmp(Un_Etat->Un_Programme->tokens[i],"-") == 0)
+        {
+          resultat = val2 - val1 ; 
+        }
+        else if (strcmp(Un_Etat->Un_Programme->tokens[i],"*") == 0)
+        {
+          resultat = val1 * val2 ; 
+        }
+        else if (strcmp(Un_Etat->Un_Programme->tokens[i],"/") == 0)
+        {
+          if (val1 != 0)
+          {
+            resultat = val2 / val1 ; 
+          }
+          else 
+          {
+            printf("ERROR : Division par 0") ; 
+            break ; 
+          }
+        }
+        else // L'opérateur n'est pas +, -, * ou /
+        {
+          printf("ERROR : Operateur inconnu\n") ; 
+          break ; 
+        }
+      }
+      else // S'il y a moins de 2 nombres dans la pile
+      {
+       printf("ERROR : Pas assez de nombres pour faire une operation\n") ;
+       break ; 
+      }
     }
+    // Si le token est un nombre
+    else if (isdigit(Un_Etat->Un_Programme->tokens[i][0]))
+    {
+      resultat = atoi(Un_Etat->Un_Programme->tokens[i]) ;  
+    }
+    else // Si le token n'est ni un opérateur arithmétique ni un nombre
+    {
+      printf("ERROR : Le token n'est ni un operateur ni un nombre\n") ; 
+      break ; 
+    }
+    Empiler(resultat, Un_Etat->Une_Pile) ; 
   }
 }
 
 int main(int argc, char * argv[])
 {
-  struct Pile_Entiers Ma_Pile ;
+  // Test des fonctions de la pile
+  /*struct Pile_Entiers Ma_Pile ;
   Ma_Pile = Creer_Pile() ;
   Afficher(Ma_Pile) ;
   Empiler(8,&Ma_Pile) ;
@@ -135,11 +189,25 @@ int main(int argc, char * argv[])
   Afficher(Ma_Pile) ;
   Depiler(&Ma_Pile) ;
   Afficher(Ma_Pile) ;
-  printf("\n") ; 
+  printf("\n") ; */
 
-  Programme * Mon_Programme = lexer(argv[1]) ;
+  // Test d'affichage des différents tokens
+  /* Programme * Mon_Programme = lexer(argv[1]) ;
   for (int i = 0 ; i < Mon_Programme->taille ; i++)
-    printf("TOKEN : %s\n", Mon_Programme->tokens[i]) ; 
+    printf("TOKEN : %s\n", Mon_Programme->tokens[i]) ; */
+
+  struct Pile_Entiers * Ma_Pile = Creer_Pile(); 
+  struct Etat Mon_Etat ; 
+  Mon_Etat.Une_Pile = Ma_Pile ; 
+
+  if (argc >= 2)
+  {
+    Mon_Etat.Un_Programme = lexer(argv[1]) ; 
+    for (int i = 0 ; i < Mon_Etat.Un_Programme->taille ; i++)
+      printf("TOKEN : %s\n", Mon_Etat.Un_Programme->tokens[i]) ;
+    Executer(&Mon_Etat) ; 
+    printf("SORTIE : %d\n", Ma_Pile->Premier->Entier) ; // A modifier selon les différents cas 
+  }
   
   return 0;
 }

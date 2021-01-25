@@ -1,3 +1,4 @@
+// exo.h
 #include <stdio.h>
 
 void Affiche(char ch[]) ;
