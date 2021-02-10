@@ -5,14 +5,18 @@ class vecteur{
         int dim ; 
         float * elements ; 
     public : 
-        // constructeurs
+        // Constructeurs
         vecteur() ;
         vecteur(int d) ;
         vecteur(int d, float * tab) ;
         vecteur(const vecteur & un_vecteur) ;
-        // destructeur
+        // Destructeur
         ~vecteur() ;
-        // fonctions annexes
+        // Fonctions annexes
         void afficher() const ;
         void saisie() ;
+        // Surcharge des opérateurs
+        float & operator [] (int indice) ; 
+        vecteur & operator = (const vecteur & un_vecteur) ; 
+        vecteur & operator += (const vecteur & un_vecteur) ; 
 };
