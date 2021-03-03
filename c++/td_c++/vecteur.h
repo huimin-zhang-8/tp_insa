@@ -21,7 +21,6 @@ class vecteur{
         vecteur & operator += (const vecteur & un_vecteur) ; 
         // Accesseurs
         int get_dim() {return dim ;}
-        float * get_elements() {return elements ;}
 };
 
 vecteur operator + (const vecteur & v1, const vecteur & v2) ;

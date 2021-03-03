@@ -7,6 +7,8 @@ vecteur::vecteur(int d) : dim(d)
 {
     if (d < 0) throw 1 ; 
     elements = new float[dim] ;
+    for (int i=0 ; i < dim ; i++)
+        elements[i] = 0 ; 
 }
 
 vecteur::vecteur(int d, float * tab) : dim(d)
@@ -20,8 +22,9 @@ vecteur::vecteur(int d, float * tab) : dim(d)
 vecteur::vecteur(const vecteur & un_vecteur) : dim(un_vecteur.dim)
 {
     elements = new float[dim] ;
-    for (int i = 0 ; i < un_vecteur.dim ; i++)
-        elements[i] = un_vecteur.elements[i] ; 
+    //for (int i = 0 ; i < un_vecteur.dim ; i++)
+    //    elements[i] = un_vecteur.elements[i] ; 
+    memcpy(elements, un_vecteur.elements, dim*sizeof(float)) ;
 }
 
 // Définition du destructeur
@@ -41,6 +44,7 @@ void vecteur::afficher() const
         for (int i = 0 ; i < dim ; i++)
             cout << elements[i] << " " ; 
         cout << "\n" ; 
+        cout << endl ; 
     }
 }
 
