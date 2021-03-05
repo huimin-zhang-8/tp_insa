@@ -17,8 +17,8 @@ class vecteur{
         void saisie() ;
         // Surcharge des opérateurs
         float & operator [] (const int indice) ; 
-        vecteur & operator = (const vecteur & un_vecteur) ; 
-        vecteur & operator += (const vecteur & un_vecteur) ; 
+        virtual vecteur & operator = (const vecteur & un_vecteur) ; 
+        virtual vecteur & operator += (const vecteur & un_vecteur) ; 
         // Accesseurs
         int get_dim() {return dim ;}
 };
