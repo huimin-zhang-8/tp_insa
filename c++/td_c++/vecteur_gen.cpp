@@ -1,6 +1,9 @@
 #include <iostream>
 #include "vecteur_gen.h"
 using namespace std ; 
+template class vecteur_gen <float> ; 
+template class vecteur_gen <int> ; 
+
 
 // Définition des constructeurs
 template <typename T> vecteur_gen<T>::vecteur_gen(int d) : dim(d)

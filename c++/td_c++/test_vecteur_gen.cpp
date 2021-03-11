@@ -2,6 +2,7 @@
 #include "vecteur_gen.h"
 using namespace std ; 
 
+
 int main()
 {
     vecteur_gen <float> vf(3) ; 

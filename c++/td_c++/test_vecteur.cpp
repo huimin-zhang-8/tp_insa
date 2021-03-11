@@ -19,8 +19,8 @@ int main(){
     v4.saisie() ; 
     v4.afficher() ; */ 
 
-    // Test des exceptions des constructeurs et des opérateurs (TD2)
-    try {
+    // Test des exceptions des constructeurs et des opérateurs (TD2 et TD5)
+    /* try {
         vecteur v1(10) ; 
         // vecteur v2(-10) ; 
         float f ; 
@@ -38,6 +38,7 @@ int main(){
         v3.afficher() ; 
         v1 = v2 + v3 ; 
         v1.afficher() ; 
+
     }
     catch (int erreur) {
         switch(erreur) {
@@ -46,7 +47,14 @@ int main(){
             case 3 : cout << "Erreur dimension \n" ; break ; 
             default : cout << "Exception inconnue \n" ; 
         }
-    }
+    } */
+
+    // Test multiplication 
+    vecteur v(5) ; 
+    v.saisie() ; 
+    v.afficher() ; 
+    v = multiplication(2,v) ; 
+    v.afficher() ;
 
     return(0) ; 
 }

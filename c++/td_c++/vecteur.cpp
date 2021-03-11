@@ -37,15 +37,10 @@ vecteur::~vecteur()
 // Définition des fonctions annexes
 void vecteur::afficher() const 
 {
-    if (elements == NULL) 
-        cout << "Vecteur vide ! \n" ;
-    else { 
-        cout << "Contenu du vecteur : " ; 
-        for (int i = 0 ; i < dim ; i++)
-            cout << elements[i] << " " ; 
-        cout << "\n" ; 
-        cout << endl ; 
-    }
+    cout << "(" ; 
+    for (int i = 0 ; i < dim ; i++)
+        cout << elements[i] << " " ; 
+    cout << ")" << endl ; 
 }
 
 void vecteur::saisie() 
@@ -82,4 +77,11 @@ vecteur operator + (const vecteur & v1, const vecteur & v2)
 {
     vecteur aux(v1) ; 
     return (aux+=v2) ; 
+}
+
+vecteur multiplication (float f, vecteur & v) 
+{
+    for (int i = 0 ; i < v.dim ; i++)
+        v.elements[i] *= f ; 
+    return v ; 
 }

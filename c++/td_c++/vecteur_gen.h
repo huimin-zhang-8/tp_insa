@@ -26,7 +26,7 @@ template <typename T> class vecteur_gen{
 
 template <typename T> vecteur_gen <T> operator + (const vecteur_gen <T> & v1, const vecteur_gen <T> & v2) ;
 
-template <typename T> std::ostream & operator << (ostream & os, const vecteur_gen <T> vecteur) ; 
+template <typename T> ostream & operator << (ostream & os, const vecteur_gen <T> vecteur) ; 
 template <typename T> istream & operator >> (istream & is, vecteur_gen <T> vecteur) ;
 
 #endif
