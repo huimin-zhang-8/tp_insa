@@ -16,6 +16,7 @@ class Figure {
     public : 
         virtual float perimetre()=0 ;
         virtual void afficherCaracteristiques()=0 ; 
+        virtual void afficherCouleur() {} ; 
         static int cpt ; 
         Figure() ;
 };
@@ -69,4 +70,5 @@ class Cercle : public Figure, public Coloriable {
         void setRayon(float R) ; 
         virtual float perimetre() ; 
         virtual void afficherCaracteristiques() ; 
+        virtual void afficherCouleur() ; 
 }; 

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <list>
+#include <typeinfo>
 #include "figure.h"
 using namespace std ; 
 
@@ -37,6 +39,7 @@ int main()
     O.afficherCaracteristiques() ; 
     cout << endl ; */ 
 
+    /*// Test sur un tableau de figures
     Figure * Tab[3] ; 
     Tab[0] = new Carre(4) ; 
     Tab[1] = new Cercle(2, "rouge") ; 
@@ -48,5 +51,26 @@ int main()
         Tab[i]->afficherCaracteristiques() ;
         cout << endl ; 
     }
-    cout << "cpt = " << Figure::cpt << endl ; 
+    cout << "cpt = " << Figure::cpt << endl ; */
+
+    list <Figure*> mesFigures ;
+    list <Figure*>::iterator it ;
+    mesFigures.push_back(new Carre(2)) ; 
+    mesFigures.push_back(new Cercle(3, "bleu")) ; 
+    mesFigures.push_back(new TriangleEquilateral(2)) ; 
+    mesFigures.push_back(new Rectangle(2,3)) ; 
+    mesFigures.pop_back() ; 
+    cout << "La liste est-elle vide ? " << mesFigures.empty() << endl ; 
+    for (it=mesFigures.begin() ; it!=mesFigures.end() ; it++) 
+    {
+        cout << "Perimetre : " << (*(*it)).perimetre()  << endl ; 
+        (*it)->afficherCaracteristiques() ; 
+        if (typeid((*(*it)))==typeid(Cercle))
+            (*it)->afficherCouleur() ; 
+        cout << endl ; 
+    }    
+    if (it==mesFigures.end()) 
+        cout << "L'iterateur est arrive a la fin de la liste" << endl ; 
+    else 
+        cout << "L'iterateur n'est pas arrive a la fin de la liste" << endl ; 
 }

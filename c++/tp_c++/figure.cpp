@@ -64,5 +64,8 @@ float Cercle::perimetre() {return 2*PI*rayon ;}
 
 void Cercle::afficherCaracteristiques() {
     cout << "Rayon du cercle : " << rayon << endl ; 
+}
+
+void Cercle::afficherCouleur() {
     cout << "Couleur : " << getCouleur() << endl ; 
 }
